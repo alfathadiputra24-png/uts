@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplikasi Kepemimpinan di Era Disruptif</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts Inter & Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            800: '#3730a3',
+                            900: '#312e81',
+                        },
+                        darkbg: '#0f172a',
+                        darkcard: '#1e293b'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Outfit', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col md:flex-row antialiased selection:bg-brand-500 selection:text-white">
+
+    <!-- Sidebar / Navigasi Utama -->
+    <aside id="sidebar" class="w-full md:w-72 bg-slate-900 border-r border-slate-800 flex-shrink-0 flex flex-col justify-between z-40 transition-all duration-300">
+        <div>
+            <!-- Header Sidebar -->
+            <div class="p-5 border-b border-slate-800 flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-400 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-brand-500/30">
+                        <i class="fa-solid fa-compass-drafting"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-heading font-bold text-lg text-white leading-tight">LeadDisrupt</h1>
+                        <p class="text-xs text-brand-500 font-medium">Kepemimpinan Era Disruptif</p>
+                    </div>
+                </div>
+                <button id="closeMobileMenu" class="md:hidden text-slate-400 hover:text-white p-2">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+
+            <!-- Ringkasan Progress Belajar -->
+            <div class="p-4 mx-4 my-4 rounded-xl bg-slate-800/60 border border-slate-700/50">
+                <div class="flex justify-between items-center text-xs text-slate-300 mb-2">
+                    <span class="font-medium"><i class="fa-solid fa-graduation-cap text-brand-500 mr-1"></i> Progres Belajar</span>
+                    <span id="progressText" class="font-bold text-brand-500">0%</span>
+                </div>
+                <div class="w-full bg-slate-700 rounded-full h-2 overflow-hidden">
+                    <div id="progressBar" class="bg-gradient-to-r from-brand-500 to-indigo-400 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <!-- Menu Navigasi Nav -->
+            <nav class="px-3 space-y-1">
+                <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition-all text-brand-500 bg-brand-500/10 border border-brand-500/20">
+                    <i class="fa-solid fa-chart-pie w-5 text-center"></i>
+                    <span>Dashboard & Overview</span>
+                </button>
+                <button onclick="switchTab('materi')" id="nav-materi" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition-all text-slate-400 hover:text-slate-200 hover:bg-slate-800/60">
+                    <i class="fa-solid fa-book-open w-5 text-center"></i>
+                    <span>Materi Pertemuan (1-8)</span>
+                </button>
+                <button onclick="switchTab('referensi')" id="nav-referensi" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition-all text-slate-400 hover:text-slate-200 hover:bg-slate-800/60">
+                    <i class="fa-solid fa-bookmark w-5 text-center"></i>
+                    <span>Referensi Jurnal & Buku</span>
+                </button>
+                <button onclick="switchTab('uts')" id="nav-uts" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition-all text-slate-400 hover:text-slate-200 hover:bg-slate-800/60">
+                    <i class="fa-solid fa-file-pen w-5 text-center"></i>
+                    <span>Soal & Jawaban UTS</span>
+                </button>
+                <button onclick="switchTab('latihan')" id="nav-latihan" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition-all text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 flex justify-between items-center">
+                    <div class="flex items-center space-x-3">
+                        <i class="fa-solid fa-laptop-code w-5 text-center"></i>
+                        <span>Latihan 30 Soal Essai</span>
+                    </div>
+                    <span class="bg-brand-500/20 text-brand-400 text-xs px-2 py-0.5 rounded-full border border-brand-500/30">30 Soal</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Footer Sidebar -->
+        <div class="p-4 border-t border-slate-800 text-xs text-slate-500 text-center">
+            <p>© 2026 Modul Digital Kepemimpinan</p>
+            <p class="mt-1 text-slate-600">Akses Terbuka Semua Perangkat</p>
+        </div>
+    </aside>
+
+    <!-- Content Wrapper Utama -->
+    <div class="flex-1 flex flex-col min-h-screen overflow-x-hidden">
+        
+        <!-- Header Atas (Mobile Toggle & Search) -->
+        <header class="bg-slate-900/80 backdrop-blur-md border-b border-slate-800 sticky top-0 z-30 px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <button id="openMobileMenu" class="md:hidden text-slate-400 hover:text-white p-2 rounded-lg bg-slate-800">
+                    <i class="fa-solid fa-bars text-lg"></i>
+                </button>
+                <div class="relative hidden sm:block w-64 md:w-80">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                    <input type="text" id="globalSearch" oninput="handleSearch(this.value)" placeholder="Cari materi, konsep, soal..." class="w-full bg-slate-950 border border-slate-800 text-slate-200 text-xs rounded-xl pl-9 pr-4 py-2 focus:outline-none focus:border-brand-500 transition-colors">
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-3">
+                <button onclick="exportProgress()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 px-3 py-2 rounded-xl flex items-center space-x-2 transition-colors">
+                    <i class="fa-solid fa-download"></i>
+                    <span class="hidden sm:inline">Cetak / Simpan PDF</span>
+                </button>
+                <div class="w-8 h-8 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-xs text-slate-300 font-bold">
+                    M
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 p-4 md:p-8 max-w-7xl mx-auto w-full">
+
+            <!-- TAB 1: DASHBOARD -->
+            <section id="tab-dashboard" class="space-y-6">
+                <!-- Hero Section -->
+                <div class="relative rounded-3xl bg-gradient-to-r from-brand-900 via-slate-900 to-slate-900 border border-slate-800 p-6 md:p-10 overflow-hidden shadow-2xl">
+                    <div class="absolute -right-10 -bottom-10 w-72 h-72 bg-brand-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                    <div class="max-w-2xl relative z-10">
+                        <span class="inline-block px-3 py-1 bg-brand-500/20 text-brand-300 border border-brand-500/30 text-xs font-semibold rounded-full mb-4">
+                            <i class="fa-solid fa-bolt mr-1"></i> Rangkuman Komprehensif Pertemuan 1 - 8
+                        </span>
+                        <h2 class="text-3xl md:text-5xl font-heading font-extrabold text-white tracking-tight leading-tight mb-4">
+                            Masteri Kepemimpinan di Era Disruptif & BANI
+                        </h2>
+                        <p class="text-slate-300 text-sm md:text-base leading-relaxed mb-6">
+                            Platform interaktif pembelajaran kepemimpinan tingkat lanjut. Didesain secara sistematis merangkum teori inti, studi kasus inovasi, pengambilan keputusan AI, resiliensi organisasi, hingga kepemimpinan etis yang dapat diakses oleh semua perangkat.
+                        </p>
+                        <div class="flex flex-wrap gap-3">
+                            <button onclick="switchTab('materi')" class="bg-brand-600 hover:bg-brand-500 text-white font-medium text-sm px-5 py-3 rounded-xl transition-colors shadow-lg shadow-brand-600/30 flex items-center space-x-2">
+                                <span>Mulai Belajar</span>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                            <button onclick="switchTab('latihan')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-medium text-sm px-5 py-3 rounded-xl transition-colors flex items-center space-x-2">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                                <span>Coba 30 Latihan Essai</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Grid -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="glass-card p-5 rounded-2xl">
+                        <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center mb-3 text-lg">
+                            <i class="fa-solid fa-book"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white font-heading">8 Pertemuan</h3>
+                        <p class="text-xs text-slate-400 mt-1">Rangkuman Materi Utama</p>
+                    </div>
+                    <div class="glass-card p-5 rounded-2xl">
+                        <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center mb-3 text-lg">
+                            <i class="fa-solid fa-quote-left"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white font-heading">16+ Jurnal</h3>
+                        <p class="text-xs text-slate-400 mt-1">Referensi Ilmiah Terpercaya</p>
+                    </div>
+                    <div class="glass-card p-5 rounded-2xl">
+                        <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center mb-3 text-lg">
+                            <i class="fa-solid fa-award"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white font-heading">5 Soal UTS</h3>
+                        <p class="text-xs text-slate-400 mt-1">Lengkap Kunci Jawaban</p>
+                    </div>
+                    <div class="glass-card p-5 rounded-2xl">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-3 text-lg">
+                            <i class="fa-solid fa-list-check"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white font-heading">30 Essai</h3>
+                        <p class="text-xs text-slate-400 mt-1">Latihan & Analisis Jawaban</p>
+                    </div>
+                </div>
+
+                <!-- Modul Roadmap Pertemuan -->
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+                    <h3 class="text-xl font-heading font-bold text-white mb-6 flex items-center space-x-2">
+                        <i class="fa-solid fa-sitemap text-brand-500"></i>
+                        <span>Peta Pembelajaran Kepemimpinan Disruptif</span>
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4" id="moduleRoadmap">
+                        <!-- Generative content via JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 2: RANGKUMAN MATERI (PERTEMUAN 1 - 8) -->
+            <section id="tab-materi" class="hidden space-y-8">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-5">
+                    <div>
+                        <h2 class="text-2xl md:text-3xl font-heading font-bold text-white">Rangkuman Materi Pertemuan 1 - 8</h2>
+                        <p class="text-slate-400 text-sm mt-1">Konsep esensial, kerangka kerja, analisis kritis, dan studi kasus ringkas.</p>
+                    </div>
+                    <!-- Quick Jump Dropdown -->
+                    <select id="sessionJump" onchange="jumpToSession(this.value)" class="bg-slate-900 border border-slate-700 text-xs text-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-500">
+                        <option value="">-- Loncat ke Pertemuan --</option>
+                        <option value="p1">Pertemuan 1: Konsep Dasar & Era Disruptif</option>
+                        <option value="p2">Pertemuan 2: Teori Kepemimpinan & Evolusinya</option>
+                        <option value="p3">Pertemuan 3: Inovasi Strategis & Transformasi Digital</option>
+                        <option value="p4">Pertemuan 4: Budaya Organisasi & Manajemen Perubahan</option>
+                        <option value="p5">Pertemuan 5: Pengambilan Keputusan Berbasis Data & AI</option>
+                        <option value="p6">Pertemuan 6: Mindful Leadership & Resiliensi Organisasi</option>
+                        <option value="p7">Pertemuan 7: Komunikasi Strategis Era Hibrida</option>
+                        <option value="p8">Pertemuan 8: Kepemimpinan Etis, Sustainability & ESG</option>
+                    </select>
+                </div>
+
+                <!-- Container Materi Pertemuan -->
+                <div id="materiContainer" class="space-y-10">
+                    <!-- Dynamic Material Cards rendered via JS -->
+                </div>
+            </section>
+
+            <!-- TAB 3: REFERENSI JURNAL -->
+            <section id="tab-referensi" class="hidden space-y-6">
+                <div>
+                    <h2 class="text-2xl md:text-3xl font-heading font-bold text-white">Referensi Jurnal & Literatur Akademik</h2>
+                    <p class="text-slate-400 text-sm mt-1">Rujukan ilmiah utama yang mendasari materi Kepemimpinan Disruptif Pertemuan 1 s.d 8.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="journalContainer">
+                    <!-- Rendered via JS -->
+                </div>
+            </section>
+
+            <!-- TAB 4: SOAL & JAWABAN UTS -->
+            <section id="tab-uts" class="hidden space-y-6">
+                <div class="bg-gradient-to-r from-indigo-900/50 via-slate-900 to-slate-900 p-6 border border-slate-800 rounded-2xl">
+                    <h2 class="text-2xl md:text-3xl font-heading font-bold text-white flex items-center space-x-3">
+                        <i class="fa-solid fa-graduation-cap text-brand-400"></i>
+                        <span>Soal Essai Ujian Tengah Semester (UTS) & Kunci Jawaban</span>
+                    </h2>
+                    <p class="text-slate-300 text-sm mt-2">
+                        Kumpulan soal essai analisis tingkat tinggi (HOTS) yang menguji pemahaman kritis mengenai kepemimpinan dalam era disruptif beserta kunci jawaban model dan rubrik evaluasinya.
+                    </p>
+                </div>
+
+                <div id="utsContainer" class="space-y-6">
+                    <!-- Rendered via JS -->
+                </div>
+            </section>
+
+            <!-- TAB 5: LATIHAN 30 SOAL ESSAI -->
+            <section id="tab-latihan" class="hidden space-y-6">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-900 p-6 border border-slate-800 rounded-2xl">
+                    <div>
+                        <h2 class="text-2xl md:text-3xl font-heading font-bold text-white">Latihan Interaktif 30 Soal Essai</h2>
+                        <p class="text-slate-400 text-sm mt-1">Uji pemahaman mandiri dengan penjelasan rinci "Kenapa Benar / Kenapa Salah".</p>
+                    </div>
+                    <!-- Filter Pertemuan -->
+                    <div class="flex items-center space-x-2">
+                        <label class="text-xs text-slate-400 font-medium">Filter:</label>
+                        <select id="filterSessionQuiz" onchange="renderQuiz(this.value)" class="bg-slate-950 border border-slate-700 text-xs text-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:border-brand-500">
+                            <option value="all">Semua Pertemuan (1 - 8)</option>
+                            <option value="1">Pertemuan 1</option>
+                            <option value="2">Pertemuan 2</option>
+                            <option value="3">Pertemuan 3</option>
+                            <option value="4">Pertemuan 4</option>
+                            <option value="5">Pertemuan 5</option>
+                            <option value="6">Pertemuan 6</option>
+                            <option value="7">Pertemuan 7</option>
+                            <option value="8">Pertemuan 8</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Quiz List Container -->
+                <div id="quizContainer" class="space-y-6">
+                    <!-- Rendered via JS -->
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Modal Penjelasan Rinci -->
+    <div id="explanationModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-2xl w-full p-6 space-y-4 max-h-[85vh] overflow-y-auto shadow-2xl">
+            <div class="flex justify-between items-start border-b border-slate-800 pb-3">
+                <h3 class="text-lg font-heading font-bold text-white flex items-center space-x-2">
+                    <i class="fa-solid fa-circle-info text-brand-400"></i>
+                    <span>Penjelasan & Analisis Evaluasi Jawaban</span>
+                </h3>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-white p-1">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+            <div id="modalBody" class="space-y-3 text-sm text-slate-300">
+                <!-- Modal Body Content -->
+            </div>
+            <div class="pt-3 border-t border-slate-800 text-right">
+                <button onclick="closeModal()" class="bg-brand-600 hover:bg-brand-500 text-white px-4 py-2 rounded-xl text-xs font-medium transition-colors">
+                    Paham & Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data Script & App Logic -->
+    <script>
+        // DATA MATERI PERTEMUAN 1 - 8
+        const materiData = [
+            {
+                id: "p1",
+                session: 1,
+                title: "Konsep Dasar Kepemimpinan & Era Disruptif",
+                subtitle: "Navigasi Lingkungan VUCA ke BANI & Karakteristik Pemimpin Disruptif",
+                icon: "fa-rocket",
+                color: "from-blue-600 to-cyan-500",
+                summary: `Pertemuan ini membahas pergeseran mendasar lingkungan bisnis global dari kerangka VUCA (Volatility, Uncertainty, Complexity, Ambiguity) menuju kerangka BANI (Brittle, Anxious, Non-linear, Incomprehensible). Disrupsi tidak hanya terjadi akibat teknologi, melainkan kombinasi pergeseran sosial, demografi, dan krisis global. Pemimpin disruptif didefinisikan sebagai individu yang secara aktif menantang status quo, mendorong inovasi eksploratif, dan tidak sekadar merespons perubahan melainkan menciptakan disrupsi positif di industrinya.`,
+                points: [
+                    "<strong>Pergeseran Kerangka VUCA ke BANI:</strong> Dunia tidak lagi sekadar rumit (complex), melainkan BANI — Rapuh (Brittle), Ansius/Cemas (Anxious), Non-linear (sebab-akibat terputus), dan Sulit Dipahami (Incomprehensible).",
+                    "<strong>Disruptive Innovation vs Sustaining Innovation:</strong> Pemahaman teori Clayton Christensen mengenai bagaimana inovasi yang awalnya sederhana dan murah dapat menumbangkan inkumben raksasa.",
+                    "<strong>Core Competencies Pemimpin Disruptif:</strong> Pemikiran antisipatif (Anticipatory thinking), toleransi tinggi terhadap ketidakpastian, pola pikir eksperimentasi pesat, dan kerendahan hati intelektual (intellectual humility)."
+                ],
+                caseStudy: "Studi Kasus: Bagaimana Netflix beralih dari sewa DVD ke streaming dan produksi konten Orisinal, mendisrupsi bisnis Blockbuster yang gagal mengantisipasi non-linearitas teknologi.",
+                references: ["Christensen, C. M. (1997). The Innovator's Dilemma. Harvard Business Review Press.", "Cascio, W. F. (2021). Leading in a BANI World. Organizational Dynamics, 50(2)."]
+            },
+            {
+                id: "p2",
+                session: 2,
+                title: "Teori-Teori Kepemimpinan & Evolusinya",
+                subtitle: "Dari Heroic Leadership menuju Post-Heroic, Authentic & Agile Leadership",
+                icon: "fa-layer-group",
+                color: "from-purple-600 to-pink-500",
+                summary: `Pertemuan kedua mengeksplorasi evolusi sejarah teori kepemimpinan. Paradigma kepemimpinan tradisional berbasis "Heroic Leadership" (Great Man Theory, Trait Theory, Commanding) terbukti tidak memadai dalam mengatasi kompleksitas era modern. Fokus bergeser ke kepemimpinan Post-Heroic yang menekankan Servant Leadership, Kepemimpinan Otentik (Authentic Leadership), Kepemimpinan Transformasional, serta Agile Leadership yang memfasilitasi otonomi tim.`,
+                points: [
+                    "<strong>Evolusi Paradigma:</strong> Pergeseran dari instruksi komando puncak (top-down control) menjadi kepemimpinan kolektif, terdistribusi, dan adaptif.",
+                    "<strong>Authentic Leadership (Bill George):</strong> Kepemimpinan yang berlandaskan kesadaran diri (self-awareness), nilai-nilai moral terinternalisasi, pemrosesan informasi seimbang, dan transparansi relasional.",
+                    "<strong>Agile & Servant Leadership:</strong> Pemimpin berperan sebagai enabler (penyedia sarana) dan pembersih hambatan (obstacle remover) agar tim mandiri dapat bergerak cepat."
+                ],
+                caseStudy: "Studi Kasus: Satya Nadella merestrukturisasi budaya Microsoft dari 'Know-it-all' menjadi 'Learn-it-all' dengan mengadopsi Authentic & Growth Mindset Leadership.",
+                references: ["George, B. (2003). Authentic Leadership: Rediscovering the Secrets to Creating Lasting Value. Jossey-Bass.", "Avolio, B. J., & Walumbwa, F. O. (2014). Transformational and Authentic Leadership. Oxford Handbook."]
+            },
+            {
+                id: "p3",
+                session: 3,
+                title: "Inovasi Strategis & Digital Transformation",
+                subtitle: "Ambidextrous Leadership & Eksekusi Pivot Model Bisnis",
+                icon: "fa-network-wired",
+                color: "from-emerald-600 to-teal-500",
+                summary: `Transformasi digital bukan sekadar adopsi perangkat lunak atau teknologi IT, melainkan transformasi budaya dan strategi bisnis secara menyeluruh. Pemimpin harus memiliki kemampuan 'Ambidexterity' — kemampuan mengelola dan mengoptimalkan bisnis inti saat ini (Exploitation) sekaligus mengeksplorasi peluang dan model bisnis baru masa depan (Exploration) secara simultan.`,
+                points: [
+                    "<strong>Organizational Ambidexterity:</strong> Menyeimbangkan efisiensi operasional harian dengan keberanian melakukan R&D eksploratif bernilai tinggi.",
+                    "<strong>Pola Pikir Digital (Digital Mindset):</strong> Menggabungkan pemahaman kapasitas kapabilitas teknologi (AI, Cloud, IoT) dengan pemikiran berpusat pada pengguna (Customer-Centricity).",
+                    "<strong>Penghambat Transformasi Digital:</strong> Inersia budaya, sindrom 'Not Invented Here', dan alokasi sumber daya yang terlalu protektif pada produk legacy."
+                ],
+                caseStudy: "Studi Kasus: Fujifilm berhasil selamat dari kepunahan industri film fotografi dengan memanfaatkan kapabilitas kimia fotografi mereka untuk masuk ke industri kosmetik dan farmasi (Ambidexterity), sementara Kodak bangkrut.",
+                references: ["O'Reilly, C. A., & Tushman, M. L. (2004). The Ambidextrous Organization. Harvard Business Review, 82(4), 74-83.", "Westerman, G., et al. (2014). Leading Digital: Turning Technology into Business Transformation. HBR Press."]
+            },
+            {
+                id: "p4",
+                session: 4,
+                title: "Budaya Organisasi & Manajemen Perubahan",
+                subtitle: "Psychological Safety & Model Perubahan Kotter / ADKAR",
+                icon: "fa-users-gear",
+                color: "from-amber-600 to-orange-500",
+                summary: `Inovasi dan teknologi terbaik akan gagal jika berbenturan dengan budaya organisasi yang resisten. Pertemuan ini mendalami penciptaan Keamanan Psikologis (Psychological Safety) sebagai prasyarat utama budaya inovasi, serta penerapan kerangka kerja manajemen perubahan sistematis seperti Kotter’s 8-Step Change Model dan ADKAR Model.`,
+                points: [
+                    "<strong>Psychological Safety (Amy Edmondson):</strong> Iklim organisasi di mana anggota tim merasa aman untuk mengambil risiko terukur, mengutarakan ide kontroversial, serta mengakui kesalahan tanpa takut dihakimi atau dihukum.",
+                    "<strong>Kotter's 8-Step Change Model:</strong> Dari menciptakan urgensi (creating sense of urgency), membentuk koalisi penuntun, hingga mengakar budaya baru (anchoring new approaches in culture).",
+                    "<strong>Mengatasi Resistensi Perubahan:</strong> Memahami bahwa resistensi seringkali berasal dari rasa takut akan kehilangan kendali atau hilangnya rasa kompeten."
+                ],
+                caseStudy: "Studi Kasus: Proyek 'Project Aristotle' Google menemukan bahwa faktor penentu utama keberhasilan tim berkinerja tinggi bukanlah IQ anggotanya, melainkan Psychological Safety.",
+                references: ["Edmondson, A. (1999). Psychological Safety and Learning Behavior in Work Teams. Administrative Science Quarterly, 44(2), 350-383.", "Kotter, J. P. (1996). Leading Change. Harvard Business School Press."]
+            },
+            {
+                id: "p5",
+                session: 5,
+                title: "Pengambilan Keputusan Berbasis Data & AI",
+                subtitle: "Data-Driven Decision Making (DDDM) & AI-Augmented Leadership",
+                icon: "fa-brain",
+                color: "from-indigo-600 to-blue-500",
+                summary: `Di era kecerdasan buatan (AI) dan Big Data, pengambilan keputusan intuitif yang hanya mengandalkan pengalaman masa lalu memiliki risiko kegagalan tinggi. Pemimpin modern harus mampu mengintegrasikan Data-Driven Decision Making (DDDM) dengan pemikiran kritis humanis, serta memahami bias algoritma dan dilema etika analitik.`,
+                points: [
+                    "<strong>Data-Driven Decision Making (DDDM):</strong> Pendekatan sistematis mengumpulkan, menganalisis, dan memvalidasi hipotesis bisnis berdasarkan fakta data riil.",
+                    "<strong>Augmented Leadership:</strong> Kolaborasi sinergis antara kecerdasan buatan (kecepatan analitik komputasi) dengan kecerdasan manusia (konteks, empati, norma etika).",
+                    "<strong>Mitigasi Bias & Dilema Etis AI:</strong> Pemimpin bertanggung jawab memastikan algoritma tidak mengandung bias diskriminatif dan menjaga privasi data pengguna."
+                ],
+                caseStudy: "Studi Kasus: Amazon menghentikan alat perekrutan berbasis AI-nya setelah menemukan algoritma tersebut menunjukkan bias gender terhadap pelamar wanita akibat pelatihan data historis 10 tahun terakhir.",
+                references: ["Davenport, T. H. (2018). The AI Advantage: How to Put the Artificial Intelligence Revolution to Work. MIT Press.", "McAfee, A., & Brynjolfsson, E. (2012). Big Data: The Management Revolution. Harvard Business Review."]
+            },
+            {
+                id: "p6",
+                session: 6,
+                title: "Mindful Leadership & Resiliensi Organisasi",
+                subtitle: "Kelola Overload Kognitif, Burnout & Pembangunan Kapasitas Mental",
+                icon: "fa-heart-pulse",
+                color: "from-rose-600 to-red-500",
+                summary: `Materi pertemuan ke-6 berfokus pada dimensi internal pemimpin. Tingkat perubahan yang sangat cepat menciptakan *cognitive overload* dan ancaman *burnout*. Mindful Leadership mengintegrasikan kesadaran penuh (mindfulness), Kecerdasan Emosional (EQ), dan resiliensi agar pemimpin tetap jernih dalam mengambil keputusan di tengah krisis hebat.`,
+                points: [
+                    "<strong>Mindful Leadership:</strong> Latihan kesadaran penuh tanpa menghakimi, yang meningkatkan kejernihan kognitif, regulasi emosi, dan perhatian terfokus.",
+                    "<strong>Resiliensi Organisasi (Duchek's Framework):</strong> Kapasitas organisasi sebelum (anticipative), saat (coping), dan sesudah (adaptive/learning) krisis.",
+                    "<strong>Pengelolaan Burnout & Beban Kognitif:</strong> Strategi mempertahankan energi mental pemimpin dan tim agar terhindar dari *decision fatigue*."
+                ],
+                caseStudy: "Studi Kasus: Kepemimpinan Howard Schultz di Starbucks saat krisis ekonomi 2008, yang memutuskan menutup seluruh kedai selama setengah hari untuk melatih ulang kualitas rasa dan mengalihkan fokus kembali ke emosi nilai pelanggan.",
+                references: ["Kabat-Zinn, J. (2003). Mindfulness-Based Interventions in Context. Clinical Psychology, 10(2), 144-156.", "Duchek, S. (2020). Organizational Resilience: a Capability-based Conceptualization. Business Research, 13(1), 215-246."]
+            },
+            {
+                id: "p7",
+                session: 7,
+                title: "Komunikasi Strategis Era Hibrida",
+                subtitle: "Strategic Storytelling, Influencing without Authority & Remote Leadership",
+                icon: "fa-comments",
+                color: "from-cyan-600 to-blue-600",
+                summary: `Gaya komunikasi otoriter tidak lagi mempan di era kerja hibrida dan lintas generasi. Pemimpin disruptif harus menguasai *Strategic Storytelling* untuk menanamkan visi, mempengaruhi tanpa otoritas struktural (*Influencing without Authority*), serta mengelola emosional & keterikatan (*engagement*) tim terdistribusi (remote/hybrid).`,
+                points: [
+                    "<strong>Strategic Storytelling:</strong> Menggunakan narasi terstruktur yang menggabungkan logika (logos), emosi (pathos), dan kredibilitas (ethos) untuk menggerakkan tindakan kolektif.",
+                    "<strong>Influencing without Authority:</strong> Kemampuan meyakinkan pemangku kepentingan (stakeholders) melalui pertukaran nilai (reciprocity), koalisi, dan empati strategis.",
+                    "<strong>Asynchronous Leadership:</strong> Membangun kejelasan komunikasi tertulis dan dokumentasi dalam lingkungan kerja hibrida tanpa pengawasan mikro (micromanagement)."
+                ],
+                caseStudy: "Studi Kasus: Gitlab sebagai perusahaan 100% remote terbesar yang mempublikasikan Handbook organisasi setebal 2000+ halaman untuk memastikan transparansi dan komunikasi asinkron yang efektif.",
+                references: ["Denning, S. (2006). Effective Storytelling: Strategic Business Narrative. Strategy & Leadership, 34(1).", "Neufeld, D. J., et al. (2010). Remote Leadership, Communication Effectiveness and Performance. Leadership Quarterly."]
+            },
+            {
+                id: "p8",
+                session: 8,
+                title: "Kepemimpinan Etis, Sustainability & ESG",
+                subtitle: "ESG Integration, Long-term Value Creation & Sustainable Leadership",
+                icon: "fa-leaf",
+                color: "from-green-600 to-emerald-500",
+                summary: `Pertemuan puncak membahas kepemimpinan masa depan yang berkelanjutan. Disrupsi yang sukses tidak boleh hanya mengejar profit jangka pendek dengan mengorbankan etika, lingkungan, dan sosial. Pemimpin disruptif harus mengintegrasikan prinsip ESG (Environmental, Social, Governance) ke dalam jantung strategi bisnis organisasi.`,
+                points: [
+                    "<strong>Kepemimpinan Etis di Era Disrupsi:</strong> Menjaga kompas moral ketika aturan hukum belum sanggup mengejar laju inovasi teknologi (misal: penggunaan privasi data & AI).",
+                    "<strong>Penciptaan Nilai Pemangku Kepentingan (Stakeholder Capitalism):</strong> Bergeser dari Shareholder Primacy menjadi keberlanjutan ekosistem secara holistik.",
+                    "<strong>ESG sebagai Driver Inovasi:</strong> Mengubah regulasi lingkungan dan sosial bukan sebagai beban biaya, melainkan katalis untuk menciptakan model bisnis baru yang hijau."
+                ],
+                caseStudy: "Studi Kasus: Patagonia yang mentransfer seluruh kepemilikan saham perusahaan senilai $3 miliar ke trust nirlaba demi memastikan seluruh keuntungan digunakan untuk melawan krisis iklim.",
+                references: ["Avery, G. C., & Bergsteiner, H. (2011). Sustainable Leadership: Practices for Continuous Improvement. Routledge.", "Treviño, L. K., et al. (2003). A Qualitative Investigation of Perceived Executive Ethical Leadership. Leadership Quarterly."]
+            }
+        ];
+
+        // REFERENSI JURNAL LENGKAP
+        const referensiJurnal = [
+            { title: "The Innovator's Dilemma", author: "Clayton M. Christensen (1997)", pub: "Harvard Business Review Press", topic: "Disruptive Innovation", desc: "Karya monumental yang menjelaskan bagaimana perusahaan besar dan sukses dapat gagal karena mengabaikan teknologi disruptif berbiaya rendah." },
+            { title: "Organizational Resilience: A Capability-based Conceptualization", author: "Stefanie Duchek (2020)", pub: "Business Research, 13(1), 215-246", topic: "Organizational Resilience", desc: "Mengurai kerangka kerja kapabilitas resiliensi organisasi tahap antisipasi, koping, dan pembelajaran jangka panjang." },
+            { title: "Psychological Safety and Learning Behavior in Work Teams", author: "Amy Edmondson (1999)", pub: "Administrative Science Quarterly, 44(2)", topic: "Psychological Safety", desc: "Studi empiris dasar yang membuktikan bahwa keamanan psikologis meningkatkan kinerja, inovasi, dan tingkat belajar tim." },
+            { title: "The Ambidextrous Organization", author: "Charles A. O'Reilly & Michael L. Tushman (2004)", pub: "Harvard Business Review, 82(4)", topic: "Inovasi Strategis", desc: "Membahas bagaimana pemimpin berhasil menyeimbangkan eksekusi bisnis inti dan eksplorasi bisnis masa depan." },
+            { title: "Authentic Leadership: Rediscovering the Secrets to Creating Value", author: "Bill George (2003)", pub: "Jossey-Bass Publishing", topic: "Authentic Leadership", desc: "Panduan kepemimpinan otentik berlandaskan kompas moral terinternalisasi dan kesadaran diri jangka panjang." },
+            { title: "A Qualitative Investigation of Executive Ethical Leadership", author: "Linda K. Treviño, et al. (2003)", pub: "The Leadership Quarterly, 14(1)", topic: "Ethical Leadership", desc: "Penelitian mendalam mengenai dimensi kepemimpinan etis, integritas moral, dan dampaknya terhadap budaya organisasi." },
+            { title: "Big Data: The Management Revolution", author: "Andrew McAfee & Erik Brynjolfsson (2012)", pub: "Harvard Business Review", topic: "Data-Driven Leadership", desc: "Bagaimana keputusan berbasis data mengubah cara pemimpin mengelola operasional dan strategi pertumbuhan." },
+            { title: "Leading Change: Why Transformation Efforts Fail", author: "John P. Kotter (1995)", pub: "Harvard Business Review, 73(2)", topic: "Change Management", desc: "Kerangka 8 tahapan mendasar dalam mengarsitekturi perubahan organisasi tanpa menimbulkan kegagalan." }
+        ];
+
+        // DATA SOAL & JAWABAN UTS
+        const utsData = [
+            {
+                no: 1,
+                soal: "Analisislah perbedaan mendasar antara lingkungan VUCA (Volatility, Uncertainty, Complexity, Ambiguity) dan BANI (Brittle, Anxious, Non-linear, Incomprehensible). Mengapa kerangka BANI dinilai lebih relevan untuk menggambarkan dinamika organisasi saat ini, dan bagaimana implikasinya terhadap peran seorang pemimpin disruptif?",
+                jawaban: `<strong>Perbedaan Utama:</strong><br>
+                1. <em>Volatility -> Brittle (Rapuh):</em> VUCA melihat perubahan cepat tetapi sistem masih kuat. BANI menyadari sistem terlihat kuat namun sebenarnya sangat rapuh dan dapat runtuh mendadak (misal: rantai pasok global saat pandemi).<br>
+                2. <em>Uncertainty -> Anxious (Ansius/Cemas):</em>VUCA berfokus pada ketidakpastian informasi; BANI berfokus pada dampak emosional kecemasan massal dan kelumpuhan keputusan (decision paralysis).<br>
+                3. <em>Complexity -> Non-linear:</em> VUCA memiliki banyak variabel saling terkait; BANI menunjukkan terputusnya hubungan sebab-akibat langsung (input kecil berdampak raksasa/efek kupu-kupu).<br>
+                4. <em>Ambiguity -> Incomprehensible (Sangat Sulit Dipahami):</em> VUCA adalah kesamaran; BANI adalah kondisi di mana penambahan data tidak lagi menambah kejelasan melainkan beban kognitif.<br><br>
+                <strong>Implikasi Kepemimpinan Disruptif:</strong> Pemimpin harus mengubah fokus dari sekadar merencanakan (planning) menjadi membangun resiliensi, menanamkan *Psychological Safety*, menggunakan intuitif kognitif teruji, serta mempraktikkan *Mindful Leadership* untuk meredakan kecemasan tim.`,
+                rubrik: "Poin penuh (20): Mampu mengartikulasikan 4 dimensi BANI vs VUCA dengan tepat, menyertakan contoh konkret, dan menghubungkannya dengan peran spesifik pemimpin disruptif."
+            },
+            {
+                no: 2,
+                soal: "Jelaskan konsep 'Organizational Ambidexterity'. Mengapa banyak perusahaan besar (incumbents) mengalami kegagalan saat mencoba menjadi ambidextrous, dan strategi kepemimpinan apa yang harus diterapkan untuk mengatasi kontradiksi antara Exploitation dan Exploration?",
+                jawaban: `<strong>Konsep Ambidexterity:</strong> Kemampuan organisasi untuk mengeksekusi bisnis utama saat ini secara efisien (*Exploitation*) sekaligus mengeksplorasi bisnis masa depan yang serba tidak pasti (*Exploration*) secara simultan.<br><br>
+                <strong>Penyebab Kegagalan Perusahaan Inkumben:</strong><br>
+                1. <em>Alokasi Sumber Daya Asimetris:</em> Unit eksploitasi (penghasil uang saat ini) sering menyedot seluruh anggaran dan membunuh unit eksplorasi.<br>
+                2. <em>Kanibalisasi Budaya:</em> Budaya efisiensi dan minim risiko pada bisnis inti mematikan budaya eksperimentasi dan kegagalan pada bisnis baru.<br><br>
+                <strong>Strategi Kepemimpinan:</strong> Pemimpin harus menerapkan *Structural Ambidexterity* (memisahkan unit eksplorasi secara struktural namun tetap terhubung di tingkat eksekutif) atau *Contextual Ambidexterity* (memberikan fleksibilitas pada karyawan untuk membagi waktu antara eksekusi dan inovasi), serta menjadi jembatan budaya yang melindungi unit baru dari tekanan target jangka pendek.`,
+                rubrik: "Poin penuh (20): Menguraikan kontradiksi Exploitation vs Exploration, mengidentifikasi pemicu kegagalan inkumben, dan memberikan solusi struktural/kontekstual yang aplikatif."
+            },
+            {
+                no: 3,
+                soal: "Amy Edmondson menyatakan bahwa 'Psychological Safety' adalah fondasi utama organisasi pembelajar dan inovatif. Evaluasilah hubungan antara Psychological Safety dengan keberanian melakukan kegagalan terukur (intelligent failures) dalam konteks kepemimpinan di era digital!",
+                jawaban: `<strong>Hubungan Psychological Safety & Intelligent Failures:</strong><br>
+                Tanpa *Psychological Safety*, karyawan akan mengalami ketakutan akan hukuman sosial maupun karir jika melakukan kesalahan. Hal ini mendorong budaya 'safe play' (mencari aman) yang mematikan inovasi. Dalam era digital, inovasi lahir dari eksperimen cepat (rapid prototyping).<br><br>
+                <em>Intelligent Failures</em> (kegagalan cerdas) terjadi saat organisasi mencoba hal baru di wilayah yang belum dipetakan demi mendapatkan pembelajaran berharga. Pemimpin yang membangun Keamanan Psikologis memisahkan antara kegagalan akibat kejahatan/kelalaian (sabotage/negligence) dengan kegagalan akibat eksperimen cerdas.<br><br>
+                <strong>Peran Pemimpin:</strong> Membingkai ulang pekerjaan sebagai masalah pembelajaran (learning problem) bukan sekadar masalah eksekusi, mengomunikasikan keterbatasan diri (*admitting vulnerability*), dan merayakan pembelajaran yang didapat dari kegagalan terukur.`,
+                rubrik: "Poin penuh (20): Mampu menganalisis sintesis Psychological Safety, mendefinisikan intelligent failure, serta merumuskan tindakan nyata pemimpin dalam penciptaan budaya."
+            },
+            {
+                no: 4,
+                soal: "Pengambilan keputusan berbasis data (Data-Driven Decision Making) sering kali bertabrakan dengan intuisi dan bias algoritma. Bagaimana seorang pemimpin disruptif menyikapi dilema antara keandalan data analitik AI dengan pertimbangan etika manusiawi?",
+                jawaban: `<strong>Analisis Dilema Data vs Intuisi:</strong><br>
+                Data analitik dan AI unggul dalam mengenali pola masa lalu dan memproses informasi volume besar secara cepat. Namun, data masa lalu sering kali mengandung bias historis dan tidak mampu memprediksi 'black swan events' atau lompatan kualitatif yang belum memiliki histori data.<br><br>
+                <strong>Konsep Augmented Leadership:</strong> Pemimpin disruptif tidak boleh menjadi budak algoritma (*algorithmic determinism*) dan tidak boleh pula abaikan data (*pure gut feeling*). Pemimpin menggunakan AI sebagai mitra penambah wawasan (*Augmented Decision Making*), sementara intuisi yang teruji (informed intuition) dan pertimbangan etika manusiawi digunakan untuk memvalidasi konteks moral, empati, dan nilai jangka panjang organisasi.<br><br>
+                <strong>Mitigasi Bias:</strong> Pemimpin secara aktif mengaudit data latih AI, memastikan transparansi keputusan, dan mempertahankan pengawasan manusia (*Human-in-the-loop*).`,
+                rubrik: "Poin penuh (20): Mampu membedakan batas kapabilitas AI dan intuisi manusia serta menawarkan pendekatan integratif beretika."
+            },
+            {
+                no: 5,
+                soal: "Prinsip ESG (Environmental, Social, Governance) kini menjadi imperatif bisnis global. Bagaimana seorang pemimpin disruptif memposisikan ESG bukan sebagai biaya kepatuhan (compliance cost), melainkan sebagai penggerak utama inovasi dan keunggulan kompetitif?",
+                jawaban: `<strong>Mengubah ESG Menjadi Katalis Inovasi:</strong><br>
+                Pendekatan tradisional melihat ESG sebagai beban regulasi atau kegiatan CSR pelengkap. Pemimpin disruptif membalik cara pandang ini melalui *Sustainable Leadership Framework*:<br><br>
+                1. <em>Inovasi Produk & Model Bisnis (Environmental):</em> Mendorong perancangan produk bersirkular (circular economy) yang mengurangi limbah sekaligus membuka sumber pendapatan baru dari daur ulang.<br>
+                2. <em>Retensi Talenta & Kepercayaan Konsumen (Social):</em> Generasi Z dan Milenial memilih bekerja dan membeli produk dari perusahaan yang berkontribusi pada keadilan sosial, meningkatkan nilai merek (brand equity).<br>
+                3. <em>Mitigasi Risiko & Akuntabilitas (Governance):</em> Transparansi tata kelola menurunkan biaya modal (cost of capital) karena investor ESG global bersedia menginvestasikan dana dengan premi risiko lebih rendah.<br><br>
+                Kesimpulannya, ESG dijadikan kerangka desain (*design constraint*) yang memicu kreativitas tim untuk mendisrupsi pesaing yang masih mengandalkan ekonomi ekstraktif jangka pendek.`,
+                rubrik: "Poin penuh (20): Penjelasan komprehensif 3 dimensi ESG sebagai sumber diferensiasi inovatif, bukan sekadar kepatuhan administrasi."
+            }
+        ];
+
+        // DATA 30 SOAL ESSAI LATIHAN INTERAKTIF
+        const quizData = [
+            // Pertemuan 1 (1-4)
+            {
+                id: 1, session: 1,
+                question: "Jelaskan mengapa pendekatan kepemimpinan tradisional berbasis komando langsung (command and control) gagal berfungsi di era BANI!",
+                idealAnswer: "Di era BANI, informasi sangat terfragmentasi dan hubungan sebab-akibat bersifat non-linear. Komando terpusat menimbulkan bottleneck (kemacetan) pengambilan keputusan karena pemimpin puncak mengalami cognitive overload. Fleksibilitas dan desentralisasi wewenang lebih dibutuhkan agar tim di garda depan dapat beradaptasi secara real-time.",
+                keywords: ["non-linear", "bottleneck", "cognitive overload", "desentralisasi", "fleksibilitas"],
+                explanation: "Di era BANI, perubahan terjadi dengan begitu cepat dan acak sehingga pimpinan tertinggi tidak mungkin menguasai seluruh data riil. Struktur top-down komando akan melumpuhkan respons organisasi. Jawaban benar harus menyoroti ketidakmampuan kontrol terpusat menangani kecepatan perubahan."
+            },
+            {
+                id: 2, session: 1,
+                question: "Uraikan konsep 'Anticipatory Thinking' pada diri seorang pemimpin disruptif beserta contoh penerapannya!",
+                idealAnswer: "Anticipatory Thinking adalah kemampuan kognitif untuk memetakan sinyal-sinyal lemah (weak signals) tren masa depan sebelum menjadi arus utama, serta mensimulasikan berbagai skenario disrupsi yang mungkin menghancurkan model bisnis saat ini. Contohnya: Pemimpin industri otomotif yang berinvestasi pada baterai listrik saat mobil bensin masih sangat dominan.",
+                keywords: ["weak signals", "skenario", "masa depan", "simulasi", "model bisnis"],
+                explanation: "Anticipatory thinking bukan sekadar meramal, melainkan mempersiapkan kapabilitas sebelum disrupsi terjadi. Tanpa pemikiran antisipatif, pemimpin akan selalu dalam posisi reaktif dan terlambat merespons gerakan pasar."
+            },
+            {
+                id: 3, session: 1,
+                question: "Jelaskan dampak fenomena 'Incomprehensible' dalam kerangka BANI terhadap proses pembuatan keputusan strategis!",
+                idealAnswer: "Incomprehensible berarti penambahan volume data justru seringkali tidak menambah pemahaman, karena data tersebut sangat kompleks dan algoritma pembentuknya tidak transparan (black box). Dampaknya, pemimpin tidak boleh menunggu pemahaman 100% melainkan harus berani membuat keputusan berbasis eksperimen terukur, uji coba cepat, dan penyesuaian iteratif.",
+                keywords: ["volume data", "black box", "eksperimen terukur", "iteratif", "beban kognitif"],
+                explanation: "Mencari kejelasan sempurna di era BANI adalah bentuk ilusi. Pemimpin harus belajar bertindak dalam kondisi 'cukup tahu' (actionable insight) daripada lumpuh karena terlalu banyak menganalisis data (paralysis by analysis)."
+            },
+            {
+                id: 4, session: 1,
+                question: "Sebutkan dan jelaskan 3 karakteristik utama 'Intellectual Humility' yang wajib dimiliki pemimpin di era penuh disrupsi!",
+                idealAnswer: "1. Keterbukaan mengakui ketahuannya (Admitting ignorance) saat berhadapan dengan hal baru. 2. Kesediaan mengubah pikiran berdasarkan bukti-bukti empiris baru. 3. Menghargai gagasan atau kritik dari bawahan tanpa terhalang ego hierarki.",
+                keywords: ["keterbukaan", "mengakui", "bukti empiris", "tanpa ego", "kritik"],
+                explanation: "Intellectual humility menghindarkan pemimpin dari jebakan kepemimpinan 'arogansi sukses masa lalu'. Di dunia disruptif, apa yang membuat Anda sukses kemarin bisa jadi adalah resep bangkrut besok."
+            },
+
+            // Pertemuan 2 (5-8)
+            {
+                id: 5, session: 2,
+                question: "Bandingkan perbedaan peran pemimpin sebagai 'Hero' vs 'Host' dalam konteksPost-Heroic Leadership!",
+                idealAnswer: "Leader as Hero bertindak sebagai pemecah masalah utama, pemberi arah tunggal, dan pusat kendali. Sedangkan Leader as Host bertindak sebagai penyedia ruang kolaborasi, pembangun ekosistem, penanya pertanyaan tepat, dan penguat kapasitas anggota tim agar mereka mampu menyelesaikan masalahnya sendiri.",
+                keywords: ["hero", "host", "pemberi arah", "penyedia ruang", "ekosistem", "kolaborasi"],
+                explanation: "Post-Heroic leadership menyadari bahwa kerumitan dunia modern tidak dapat diselesaikan oleh kecerdasan tunggal seorang pemimpin 'superman'. Pemimpin masa kini harus menjadi fasilitator (host) keahlian kolektif."
+            },
+            {
+                id: 6, session: 2,
+                question: "Mengapa Authentic Leadership sangat vital untuk menjaga moral organisasi di tengah ketidakpastian yang tinggi?",
+                idealAnswer: "Authentic Leadership memberikan titik jangkar moral dan kepastian rasa percaya (trust). Ketika lingkungan eksternal sangat fluktuatif, karyawan membutuhkan pemimpin yang jujur mengenai kondisi perusahaan, konsisten antara tindakan dan nilai-nilai moral terucap, serta memiliki empati sejati.",
+                keywords: ["trust", "rasa percaya", "jujur", "konsisten", "empati", "jangkar moral"],
+                explanation: "Di tengah ketidakpastian, transparansi otentik mengurangi rasa cemas (anxiety) anggota tim. Pemimpin yang berpura-pura tahu segalanya justru akan kehilangan kredibilitas saat prediksinya salah."
+            },
+            {
+                id: 7, session: 3,
+                question: "Jelaskan peran 'Agile Leadership' dalam memfasilitasi self-organizing teams di perusahaan teknologi!",
+                idealAnswer: "Agile Leadership berfokus pada penetapan tujuan strategis yang jelas (clarity of intent) sembari memberikan otonomi penuh pada tim eksekusi mengenai 'bagaimana' cara mencapainya. Pemimpin Agile bertindak menghilangkan hambatan birokrasi dan memfasilitasi siklus feedback pendek.",
+                keywords: ["otonomi", "self-organizing", "feedback", "birokrasi", "clarity of intent"],
+                explanation: "Kepemimpinan Agile tidak melakukan pengawasan mikro. Kepemimpinan ini menekankan pada penyejajaran visi (alignment) dan pemberdayaan (empowerment) agar keputusan bisa diambil secepat mungkin di tingkat operasional."
+            },
+            {
+                id: 8, session: 2,
+                question: "Bagaimana kaitan antara 'Relational Transparency' dalam Kepemimpinan Otentik dengan efektivitas kerja tim?",
+                idealAnswer: "Relational Transparency berarti pemimpin secara terbuka membagikan pemikiran dan perasaan sejati mereka secara proporsional. Hal ini memicu iklim saling percaya, menurunkan proteksi diri defensif dari bawahan, serta mempercepat pemecahan masalah karena ketakutan politik kantor mereda.",
+                keywords: ["transparansi", "saling percaya", "defensif", "politik kantor", "keterbukaan"],
+                explanation: "Keterbukaan emosional yang sehat menciptakan budaya kerja tanpa kepura-puraan, sehingga energi organisasi digunakan penuh untuk inovasi, bukan untuk permainan politik internal."
+            },
+
+            // Pertemuan 3 (9-12)
+            {
+                id: 9, session: 3,
+                question: "Apa yang dimaksud dengan 'Syndrome Not Invented Here' dan bagaimana pemimpin mendisrupsi pemikiran terisolasi ini?",
+                idealAnswer: "Syndrome Not Invented Here adalah kecenderungan organisasi meremehkan atau menolak inovasi, ide, atau teknologi yang berasal dari luar ekosistem internal mereka sendiri. Pemimpin mendisrupsinya dengan mengadopsi Open Innovation, kemitraan startup, dan merayakan ide luar.",
+                keywords: ["not invented here", "menolak ide luar", "open innovation", "kemitraan", "ekosistem"],
+                explanation: "Seringkali kehancuran perusahaan besar diawali dari rasa superioritas internal. Pemimpin harus menyadari bahwa orang-orang terpandai tidak semuanya bekerja di dalam organisasinya sendiri."
+            },
+            {
+                id: 10, session: 3,
+                question: "Jelaskan peran pimpinan dalam memfasilitasi 'Exploration' pada Ambidextrous Organization tanpa mengganggu kas utama dari 'Exploitation'!",
+                idealAnswer: "Pemimpin memberikan otonomi penuh pada alokasi tim, indikator kinerja (KPI), dan budaya kerja unit Exploration (misal: fokus pada validasi ide & pembelajaran), sembari mengisolasi risikonya agar tidak mengganggu target efisiensi operasional unit Exploitation. Pemimpin menjadi mediator alokasi anggaran yang adil.",
+                keywords: ["autonomy", "KPI terpisah", "mediator", "alokasi anggaran", "isolasi risiko"],
+                explanation: "Menerapkan KPI efisiensi biaya pada unit inovasi baru akan langsung membunuh inovasi tersebut. Pemimpin ambidextrous mampu menerapkan dua tolok ukur kinerja yang berbeda dalam satu organisasi."
+            },
+            {
+                id: 11, session: 3,
+                question: "Sebutkan 3 alasan utama mengapa mayoritas proyek Transformasi Digital pada perusahaan manufaktur gagal melampaui fase pilot!",
+                idealAnswer: "1. Terfokus pada pembelian teknologi ketimbang transformasi budaya kerja. 2. Kurangnya kepemimpinan dan integrasi digital di tingkat eksekutif puncak. 3. Kurangnya pelatihan peningkatan keterampilan (upskilling) bagi pekerja lapangan.",
+                keywords: ["teknologi vs budaya", "komitmen eksekutif", "upskilling", "fase pilot", "manufaktur"],
+                explanation: "Transformasi Digital adalah isu kepemimpinan dan budaya, bukan sekadar proyek divisi IT. Kegagalan terjadi ketika pimpinan menganggap IT sebagai 'vendor internal'."
+            },
+            {
+                id: 12, session: 3,
+                question: "Mengapa pendekatan 'Customer-Centricity' menjadi landasan paling krusial dalam merancang Pivot Model Bisnis?",
+                idealAnswer: "Karena teknologi selalu berubah, tetapi kebutuhan mendasar manusia untuk menyelesaikan masalahnya (Jobs-to-be-done) tetap ada. Pivot yang berhasil bertumpu pada pemahaman mendalam atas rasa sakit konsumen (customer pain points), bukan pada keterikatan emosional pada produk lama perusahaan.",
+                keywords: ["customer centricity", "jobs to be done", "pain points", "pivot", "kebutuhan mendasar"],
+                explanation: "Jangan jatuh cinta pada produk Anda, jatuh cintalah pada masalah konsumen Anda. Pemimpin yang terikat pada produk fisik akan tergilas saat cara pemenuhan kebutuhan berubah."
+            },
+
+            // Pertemuan 4 (13-16)
+            {
+                id: 13, session: 4,
+                question: "Jelaskan bagaimana 'Psychological Safety' berbeda secara mendasar dari sekadar 'Sikap Ramah/Sopan' (Being Nice)!",
+                idealAnswer: "Sikap ramah sering kali menghindari konflik dan menyembunyikan kebenaran demi menjaga kenyamanan permukaan. Sebaliknya, Psychological Safety adalah kondisi di mana orang merasa cukup aman untuk berkonflik secara produktif, mendebat ide, dan menyampaikan kebenaran yang pahit tanpa takut dendam politik.",
+                keywords: ["berbeda", "konflik produktif", "debat ide", "bukan sekadar ramah", "kebenaran pahit"],
+                explanation: "Keamanan psikologis tidak berarti organisasi tanpa standar tinggi. Justru, rasa aman memungkinkan umpan balik yang sangat jujur dan konstruktif untuk standar kinerja tinggi."
+            },
+            {
+                id: 14, session: 4,
+                question: "Uraikan fase pertama model perubahan Kotter yaitu 'Establishing a Sense of Urgency' dalam situasi perusahaan yang sedang nyaman (complacent)!",
+                idealAnswer: "Pemimpin harus membuka data riil mengenai potensi ancaman masa depan, perubahan perilaku konsumen, dan gerakan pesaing baru. Pemimpin menghancurkan rasa puas diri (complacency) dengan mensimulasikan skenario kehancuran bisnis jika tidak berubah sekarang.",
+                keywords: ["urgency", "complacency", "simulasi kehancuran", "data riil", "potensi ancaman"],
+                explanation: "Manusia tidak akan mau menyeberang ke kapal penyelamat jika mereka tidak sadar bahwa kapal yang mereka tumpangi saat ini sedang bocor dan akan tenggelam."
+            },
+            {
+                id: 15, session: 4,
+                question: "Mengapa resistensi terhadap perubahan paling sering bersumber dari rasa takut akan ketidakmampuan (Loss of Competence)?",
+                idealAnswer: "Ketika sistem atau teknologi baru diperkenalkan, karyawan senior atau berpengalaman merasa status ahli mereka terancam dan takut terlihat tidak kompeten. Pemimpin harus merespons dengan menyediakan program pelatihan aman dan jaminan pendampingan.",
+                keywords: ["loss of competence", "takut tidak kompeten", "status ahli", "pelatihan", "pendampingan"],
+                explanation: "Penolakan terhadap sistem baru jarang sekali disebabkan oleh rasa benci pada teknologi itu sendiri, melainkan rasa takut ego pribadi terancam akibat hilangnya keahlian lama."
+            },
+            {
+                id: 16, session: 4,
+                question: "Bagaimana cara pemimpin mengintegrasikan Quick Wins (Kemenangan Jangka Pendek) untuk menjaga momentum transformasi?",
+                idealAnswer: "Quick Wins adalah hasil nyata yang mudah terlihat dan dicapai dalam waktu singkat (3-6 bulan). Kemenangan ini membuktikan keefektifan visi perubahan, membungkam skeptisisme, dan memberi dorongan energi positif bagi tim untuk perubahan yang lebih berat.",
+                keywords: ["quick wins", "kemenangan jangka pendek", "membungkam skeptis", "momentum", "bukti nyata"],
+                explanation: "Transformasi jangka panjang membuat tim lelah jika tidak ada pencapaian beruntah yang dirayakan di tengah jalan. Quick wins memberikan dorongan motivasi berkala."
+            },
+
+            // Pertemuan 5 (17-20)
+            {
+                id: 17, session: 5,
+                question: "Apa yang dimaksud dengan 'Algorithmic Bias' dan bagaimana kewajiban etis pemimpin dalam menanggulanginya?",
+                idealAnswer: "Algorithmic Bias adalah kecenderungan keputusan kecerdasan buatan yang diskriminatif akibat data latih historis yang mengandung prasangka manusia. Kewajiban pemimpin adalah melakukan audit keberagaman pada data masukan, transparansi model, serta menempatkan kendali etika manusia (Human-in-the-loop).",
+                keywords: ["algorithmic bias", "data latih", "diskriminatif", "audit keberagaman", "human in the loop"],
+                explanation: "AI tidak netral; AI merefleksikan prasangka dari pembuat dan data historisnya. Pemimpin etis bertanggung jawab secara hukum dan moral atas dampak pemanfaatan AI."
+            },
+            {
+                id: 18, session: 5,
+                question: "Jelaskan perbedaan peran antara Predictive Analytics dan Prescriptive Analytics dalam pengambilan keputusan eksekutif!",
+                idealAnswer: "Predictive Analytics memprediksi 'apa yang mungkin terjadi di masa depan' berdasarkan pola historis. Prescriptive Analytics melangkah lebih jauh dengan merekomendasikan 'tindakan terbaik apa yang harus diambil' beserta simulasi dampak dari tiap pilihan tersebut.",
+                keywords: ["predictive", "prescriptive", "prediksi", "rekomendasi tindakan", "simulasi dampak"],
+                explanation: "Pemimpin yang mature memanfaatkan analitik preskriptif untuk mempercepat evaluasi pilihan-pilihan strategis rumit secara terukur."
+            },
+            {
+                id: 19, session: 5,
+                question: "Mengapa konsep 'Human-in-the-Loop' wajib diterapkan dalam keputusan kritis seperti PHK massal atau alokasi anggaran?",
+                idealAnswer: "Karena keputusan strategis kritis menyangkut harkat manusia, konteks moral, empati, dan dampak sosial jangka panjang yang tidak dapat dikuantifikasi secara lengkap oleh algoritma matematis buatan.",
+                keywords: ["human in the loop", "harkat manusia", "konteks moral", "empati", "dampak sosial"],
+                explanation: "Menyerahkan keputusan penderitaan manusia murni pada algoritma adalah bentuk penyimpangan tanggung jawab kepemimpinan (leadership cowardice)."
+            },
+            {
+                id: 20, session: 5,
+                question: "Bagaimana pemimpin membangun budaya 'Data Literacy' di seluruh lini organisasi, bukan hanya di tim Data Science?",
+                idealAnswer: "Dengan mendemokratisasi akses data, menyediakan pelatihan membaca dan menginterpretasi grafik dasar bagi seluruh staf, serta membiasakan pertanyaan 'Mana data pendukung argumen ini?' dalam setiap rapat operasional.",
+                keywords: ["data literacy", "demokratisasi data", "pelatihan", "pertanyaan pendukung", "interpretasi"],
+                explanation: "Data Literacy bukan berarti semua karyawan harus menjadi coder, melainkan semua orang paham cara bertanya dan tidak mudah tertipu oleh manipulasi angka."
+            },
+
+            // Pertemuan 6 (21-23)
+            {
+                id: 21, session: 6,
+                question: "Jelaskan bagaimana praktik Mindfulness dapat mencegah terjadinya 'Decision Fatigue' pada seorang pemimpin pimpinan puncak!",
+                idealAnswer: "Mindfulness melatih perhatian terfokus dan kesadaran saat ini, memungkinkan pemimpin mengenali gejala kelelahan kognitif dan emosional secara awal. Ini membantu menghentikan reaksi otomatis (impulsif), mengistirahatkan energi mental, dan mengembalikan jangkauan perhatian sebelum mengambil keputusan berisiko tinggi.",
+                keywords: ["mindfulness", "decision fatigue", "kesadaran", "reaksi otomatis", "kejernihan mental"],
+                explanation: "Decision fatigue membuat pemimpin cenderung mengambil pilihan mudah yang berisiko buruk di akhir hari. Mindfulness memberikan jeda kognitif (the gap between stimulus and response)."
+            },
+            {
+                id: 22, session: 6,
+                question: "Uraikan 3 tahap dalam kerangka Resiliensi Organisasi menurut Stefanie Duchek!",
+                idealAnswer: "1. Anticipative Capability: Kemampuan mengdeteksi potensi krisis sebelum terjadi. 2. Coping Capability: Kemampuan bertahan dan mengelola stresor saat krisis melanda. 3. Adaptive/Learning Capability: Kemampuan bangkit dan bertransformasi ke tingkat kinerja yang lebih tinggi pasca-krisis.",
+                keywords: ["anticipative", "coping", "adaptive learning", "duchek", "tahap krisis"],
+                explanation: "Resiliensi sejati bukan sekadar kembali ke bentuk semula (bouncing back), melainkan melompat maju menjadi lebih kuat dari pengalaman krisis (bouncing forward)."
+            },
+            {
+                id: 23, session: 6,
+                question: "Apa hubungan antara Kecerdasan Emosional (EQ) pemimpin dengan tingkat kepercayaan (trust) karyawan saat masa krisis?",
+                idealAnswer: "EQ tinggi memungkinkan pemimpin mengelola kecemasan pribadinya sendiri (self-regulation) serta membaca kecemasan timnya (empathy). Saat krisis, empati terkalibrasi membuat karyawan merasa didengar dan dipahami, yang mendongkrak rasa percaya pada arah pemulihan perusahaan.",
+                keywords: ["EQ", "self-regulation", "empati", "kepercayaan", "krisis"],
+                explanation: "Dalam krisis, orang tidak peduli seberapa banyak yang Anda ketahui sampai mereka tahu seberapa banyak Anda peduli pada keselamatan mereka."
+            },
+
+            // Pertemuan 7 (24-27)
+            {
+                id: 24, session: 7,
+                question: "Jelaskan mengapa 'Strategic Storytelling' jauh lebih efektif memotivasi perubahan dibandingkan dengan presentasi data dan statistik semata!",
+                idealAnswer: "Data dan angka mengimbau pikiran analitis (Logos), tetapi narasi cerita mengaktifkan emosi (Pathos) dan pengalaman hidup. Narasi memberikan konteks mengapa perubahan itu penting secara personal, membuat visi terasa nyata, dan lebih mudah diingat dalam memori jangka panjang.",
+                keywords: ["strategic storytelling", "logos", "pathos", "emosi", "memori jangka panjang", "narasi"],
+                explanation: "Data meyakinkan pikiran, tetapi cerita menggerakkan hati dan tindakan. Pemimpin yang efektif memadukan angka yang akurat dengan narasi menyentuh."
+            },
+            {
+                id: 25, session: 7,
+                question: "Bagaimana pemimpin menjalankan prinsip 'Influencing without Authority' saat mengarahkan tim lintas divisi (cross-functional teams)?",
+                idealAnswer: "Dengan membangun empati strategis (memahami KPI divisi lain), menggunakan asas timbal-balik (reciprocity), menyelaraskan tujuan bersama yang menguntungkan semua pihak (win-win value), serta memanfaatkan kredibilitas keahlian ketimbang pangkat struktural.",
+                keywords: ["influencing without authority", "empati strategis", "reciprocity", "win-win", "kredibilitas"],
+                explanation: "Di era organisasi matriks dan hibrida, kepemimpinan struktural tidak mempan antar divisi. Pengaruh dibangun di atas fondasi pertukaran nilai dan kredibilitas."
+            },
+            {
+                id: 26, session: 7,
+                question: "Sebutkan 2 tantangan utama kepemimpinan Asinkronus dalam tim hibrida dan solusi konkretnya!",
+                idealAnswer: "1. Miskomunikasi dan rasa terisolasi: Diselesaikan dengan membuat kultur dokumentasi tertulis yang sangat jelas dan rapat rutin Check-In emosional. 2. Kelelahan koordinasi (zoom fatigue): Diselesaikan dengan membatasi rapat tatap muka digital dan beralih ke alat kolaborasi tertulis seperti Slack/Notion.",
+                keywords: ["asinkronus", "miskomunikasi", "dokumentasi tertulis", "zoom fatigue", "check-in"],
+                explanation: "Kepemimpinan hibrida yang baik bergeser dari pengawasan kehadiran fisik menjadi pengukuran hasil keluaran objektif dengan kejelasan panduan tertulis."
+            },
+            {
+                id: 27, session: 7,
+                question: "Mengapa kejelasan (Clarity) lebih penting daripada frekuensi berlebih (Over-communication) dalam komunikasi krisis?",
+                idealAnswer: "Frekuensi informasi tinggi yang simpang siur hanya akan menambah kecemasan dan noise. Komunikasi yang jelas, jujur, terstruktur, dan berisi instruksi tindak lanjut konkret memberikan kepastian psikologis yang jauh lebih menenangkan.",
+                keywords: ["clarity", "kejelasan", "noise", "kecemasan", "instruksi konkret"],
+                explanation: "Di tengah krisis, bombardir informasi tidak jelas menimbulkan kebingungan massal. Pemimpin harus menyaring pesan menjadi poin tindakan yang tajam."
+            },
+
+            // Pertemuan 8 (28-30)
+            {
+                id: 28, session: 8,
+                question: "Mengapa pendekatan 'Shareholder Primacy' dinilai usang dan bertentangan dengan prinsip kepemimpinan berkelanjutan (Sustainable Leadership)?",
+                idealAnswer: "Shareholder Primacy mengagungkan keuntungan finansial jangka pendek untuk pemilik saham dengan sering kali mengeksploitasi lingkungan dan tenaga kerja. Sustainable Leadership mengadopsi Stakeholder Capitalism yang menyeimbangkan kesejahteraan investor, karyawan, rantai pasok, masyarakat, dan planet demi keberlangsungan hidup jangka panjang.",
+                keywords: ["shareholder primacy", "stakeholder capitalism", "keuntungan jangka pendek", "keberlanjutan", "ekosistem"],
+                explanation: "Bisnis tidak dapat sukses di dalam masyarakat atau planet yang gagal. Keuntungan tanpa keberlanjutan ekosistem adalah bom waktu finansial."
+            },
+            {
+                id: 29, session: 8,
+                question: "Jelaskan konsep 'Circular Economy' dan bagaimana pemimpin mendisrupsi model bisnis linier tradisional (Take-Make-Waste)!",
+                idealAnswer: "Circular Economy merancang ulang produk dan proses bisnis agar tidak menghasilkan limbah, dengan merencanakan daur ulang, guna ulang, dan perbaikan sejak fase awal desain. Pemimpin mendisrupsinya dengan meng beralih dari jualan produk menjadi jualan layanan (Product-as-a-Service).",
+                keywords: ["circular economy", "take make waste", "product as a service", "daur ulang", "desain limbah"],
+                explanation: "Model ekonomi linier merusak planet dan boros bahan baku. Ekonomi sirkular menciptakan peluang efisiensi biaya raksasa sekaligus menjaga kelestarian."
+            },
+            {
+                id: 30, session: 8,
+                question: "Bagaimana pemimpin mengelola dilema antara pencapaian Target Profit Triwulanan dengan Investasi ESG Jangka Panjang?",
+                idealAnswer: "Pemimpin harus secara transparan mengedukasi investor mengenai kalkulasi risiko jangka panjang jika tidak berinvestasi ESG (misal: denda regulasi, kehilangan pasar gen-Z). Pemimpin mengintegrasikan efisiensi ESG yang langsung berdampak pada penghematan operasional jangka pendek sembari membangun kapabilitas hijau jangka panjang.",
+                keywords: ["dilema profit", "investasi ESG", "edukasi investor", "kalkulasi risiko", "efisiensi operasional"],
+                explanation: "Pemimpin disruptif tidak mengadu profit vs ESG, melainkan menjadikan ESG sebagai jalur utama untuk mengamankan profitabilitas masa depan."
+            }
+        ];
+
+        // LOGIC APLIKASI
+        let currentTab = 'dashboard';
+
+        function initApp() {
+            renderRoadmap();
+            renderMateri();
+            renderReferensi();
+            renderUTS();
+            renderQuiz('all');
+            updateProgress();
+        }
+
+        // Switch Tab Navigation
+        function switchTab(tabName) {
+            currentTab = tabName;
+            document.querySelectorAll('main > section').forEach(sec => sec.classList.add('hidden'));
+            document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('text-brand-500', 'bg-brand-500/10', 'border', 'border-brand-500/20');
+                btn.classList.add('text-slate-400');
+            });
+
+            const activeNav = document.getElementById(`nav-${tabName}`);
+            if (activeNav) {
+                activeNav.classList.remove('text-slate-400');
+                activeNav.classList.add('text-brand-500', 'bg-brand-500/10', 'border', 'border-brand-500/20');
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            closeMobileSidebar();
+        }
+
+        // Render Roadmap Pertemuan
+        function renderRoadmap() {
+            const container = document.getElementById('moduleRoadmap');
+            container.innerHTML = materiData.map(m => `
+                <div onclick="switchTab('materi'); jumpToSession('${m.id}')" class="bg-slate-950 border border-slate-800 hover:border-brand-500/50 p-4 rounded-xl cursor-pointer transition-all hover:-translate-y-1 group">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs font-bold text-brand-400 bg-brand-500/10 px-2.5 py-1 rounded-md border border-brand-500/20">Pertemuan ${m.session}</span>
+                        <div class="w-8 h-8 rounded-lg bg-slate-800 text-slate-300 group-hover:bg-brand-600 group-hover:text-white flex items-center justify-center text-sm transition-colors">
+                            <i class="fa-solid ${m.icon}"></i>
+                        </div>
+                    </div>
+                    <h4 class="font-heading font-bold text-white text-sm line-clamp-1 group-hover:text-brand-300 transition-colors">${m.title}</h4>
+                    <p class="text-xs text-slate-400 mt-1 line-clamp-2">${m.subtitle}</p>
+                </div>
+            `).join('');
+        }
+
+        // Render Materi Pertemuan (1-8)
+        function renderMateri() {
+            const container = document.getElementById('materiContainer');
+            container.innerHTML = materiData.map(m => `
+                <article id="${m.id}" class="bg-slate-900 border border-slate-800 rounded-2xl p-6 md:p-8 space-y-6 shadow-xl relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl ${m.color} opacity-10 rounded-bl-full pointer-events-none"></div>
+                    
+                    <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-12 h-12 rounded-xl bg-gradient-to-tr ${m.color} text-white flex items-center justify-center text-xl shadow-lg">
+                                <i class="fa-solid ${m.icon}"></i>
+                            </div>
+                            <div>
+                                <span class="text-xs font-bold text-brand-400 uppercase tracking-wider">Pertemuan Ke-${m.session}</span>
+                                <h3 class="text-xl md:text-2xl font-heading font-bold text-white">${m.title}</h3>
+                            </div>
+                        </div>
+                        <button onclick="toggleBookmark('${m.id}')" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 px-3 py-1.5 rounded-lg flex items-center space-x-1.5 transition-colors">
+                            <i class="fa-regular fa-bookmark"></i>
+                            <span>Simpan Materi</span>
+                        </button>
+                    </div>
+
+                    <p class="text-xs md:text-sm text-slate-400 italic">${m.subtitle}</p>
+
+                    <!-- Ringkasan Inti -->
+                    <div class="bg-slate-950/80 border border-slate-800 p-4 md:p-5 rounded-xl">
+                        <h4 class="text-xs font-bold text-slate-300 uppercase tracking-wider mb-2 flex items-center space-x-2">
+                            <i class="fa-solid fa-align-left text-brand-400"></i>
+                            <span>Ringkasan Eksekutif Materi</span>
+                        </h4>
+                        <p class="text-xs md:text-sm text-slate-300 leading-relaxed">${m.summary}</p>
+                    </div>
+
+                    <!-- Poin-Poin Utama -->
+                    <div class="space-y-3">
+                        <h4 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center space-x-2">
+                            <i class="fa-solid fa-list-check text-brand-400"></i>
+                            <span>Poin-Poin Kunci & Kerangka Konseptual</span>
+                        </h4>
+                        <ul class="space-y-2 text-xs md:text-sm text-slate-300">
+                            ${m.points.map(pt => `<li class="flex items-start space-x-2"><i class="fa-solid fa-chevron-right text-brand-500 text-xs mt-1"></i><span>${pt}</span></li>`).join('')}
+                        </ul>
+                    </div>
+
+                    <!-- Studi Kasus -->
+                    <div class="bg-brand-950/30 border border-brand-500/20 p-4 rounded-xl text-xs md:text-sm text-brand-200">
+                        <span class="font-bold text-brand-400 block mb-1"><i class="fa-solid fa-lightbulb mr-1"></i> Studi Kasus Industri:</span>
+                        ${m.caseStudy}
+                    </div>
+
+                    <!-- Referensi Akademik Spesifik -->
+                    <div class="pt-3 border-t border-slate-800/80 text-xs text-slate-400">
+                        <span class="font-semibold text-slate-300"><i class="fa-solid fa-book-bookmark mr-1"></i> Referensi Utama:</span>
+                        <ul class="list-disc list-inside mt-1 space-y-0.5 text-slate-400">
+                            ${m.references.map(r => `<li>${r}</li>`).join('')}
+                        </ul>
+                    </div>
+                </article>
+            `).join('');
+        }
+
+        // Render Referensi Jurnal
+        function renderReferensi() {
+            const container = document.getElementById('journalContainer');
+            container.innerHTML = referensiJurnal.map(j => `
+                <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl space-y-3 flex flex-col justify-between hover:border-brand-500/40 transition-colors">
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-brand-500/10 text-brand-400 border border-brand-500/20">${j.topic}</span>
+                            <i class="fa-solid fa-file-pdf text-slate-500 text-sm"></i>
+                        </div>
+                        <h4 class="font-heading font-bold text-white text-base leading-snug">${j.title}</h4>
+                        <p class="text-xs font-medium text-brand-300">${j.author} — <span class="italic text-slate-400">${j.pub}</span></p>
+                        <p class="text-xs text-slate-400 leading-relaxed">${j.desc}</p>
+                    </div>
+                    <div class="pt-3 border-t border-slate-800/60 flex items-center justify-between text-xs text-slate-400">
+                        <span>Status: Sitasi Terverifikasi</span>
+                        <span class="text-brand-400 font-medium"><i class="fa-solid fa-check mr-1"></i>Rujukan Akademik</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render Soal UTS
+        function renderUTS() {
+            const container = document.getElementById('utsContainer');
+            container.innerHTML = utsData.map(u => `
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-4">
+                    <div class="flex items-start justify-between gap-3">
+                        <span class="w-8 h-8 rounded-lg bg-brand-600 text-white font-bold flex items-center justify-center text-sm flex-shrink-0">
+                            ${u.no}
+                        </span>
+                        <p class="text-sm md:text-base font-semibold text-white leading-relaxed flex-1">${u.soal}</p>
+                    </div>
+
+                    <!-- Accordion Toggle Jawaban -->
+                    <div class="pt-2">
+                        <button onclick="toggleAnswer('uts-ans-${u.no}')" class="text-xs bg-slate-800 hover:bg-slate-700 text-brand-400 font-medium px-4 py-2 rounded-xl border border-slate-700 flex items-center space-x-2 transition-colors">
+                            <i class="fa-solid fa-key"></i>
+                            <span>Lihat Kunci Jawaban Model & Rubrik</span>
+                        </button>
+
+                        <div id="uts-ans-${u.no}" class="hidden mt-4 space-y-3 bg-slate-950 p-5 rounded-xl border border-slate-800 text-xs md:text-sm">
+                            <div>
+                                <h5 class="font-bold text-brand-400 mb-2 uppercase text-xs tracking-wider"><i class="fa-solid fa-check-double mr-1"></i> Kunci Jawaban Model:</h5>
+                                <div class="text-slate-300 leading-relaxed space-y-2">${u.jawaban}</div>
+                            </div>
+                            <div class="pt-3 border-t border-slate-800/80 text-xs text-amber-300">
+                                <strong>Rubrik Evaluasi Nilai:</strong> ${u.rubrik}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render Quiz 30 Soal Essai
+        function renderQuiz(sessionFilter) {
+            const container = document.getElementById('quizContainer');
+            let filtered = quizData;
+            if (sessionFilter !== 'all') {
+                filtered = quizData.filter(q => q.session == sessionFilter);
+            }
+
+            container.innerHTML = filtered.map(q => `
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-4 relative">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold text-brand-400 bg-brand-500/10 border border-brand-500/20 px-3 py-1 rounded-full">
+                            Soal #${q.id} — Pertemuan ${q.session}
+                        </span>
+                        <span class="text-xs text-slate-500">Tipe: Essai Interaktif</span>
+                    </div>
+
+                    <p class="text-sm md:text-base font-semibold text-white leading-relaxed">${q.question}</p>
+
+                    <!-- User Answer Input Area -->
+                    <div class="space-y-2">
+                        <label class="text-xs font-medium text-slate-400">Tuliskan Jawaban Anda untuk Evaluasi Mandiri:</label>
+                        <textarea id="user-input-${q.id}" rows="3" placeholder="Ketik argumen analisis Anda di sini..." class="w-full bg-slate-950 border border-slate-800 text-slate-200 text-xs md:text-sm rounded-xl p-3 focus:outline-none focus:border-brand-500 transition-colors"></textarea>
+                    </div>
+
+                    <div class="flex flex-wrap items-center gap-3">
+                        <button onclick="evaluateUserAnswer(${q.id})" class="bg-brand-600 hover:bg-brand-500 text-white text-xs font-medium px-4 py-2 rounded-xl transition-colors flex items-center space-x-2">
+                            <i class="fa-solid fa-magnifying-glass-chart"></i>
+                            <span>Evaluasi Jawaban Saya</span>
+                        </button>
+
+                        <button onclick="toggleAnswer('quiz-ans-${q.id}')" class="bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium px-4 py-2 rounded-xl border border-slate-700 transition-colors flex items-center space-x-2">
+                            <i class="fa-solid fa-eye"></i>
+                            <span>Buka Jawaban & Kunci Konsep</span>
+                        </button>
+                    </div>
+
+                    <!-- Evaluation Result Box (Hidden default) -->
+                    <div id="eval-box-${q.id}" class="hidden p-4 rounded-xl text-xs md:text-sm border"></div>
+
+                    <!-- Full Answer & Explanation (Hidden default) -->
+                    <div id="quiz-ans-${q.id}" class="hidden bg-slate-950 border border-slate-800 p-5 rounded-xl space-y-3 text-xs md:text-sm">
+                        <div>
+                            <h5 class="font-bold text-brand-400 mb-1 uppercase text-xs tracking-wider"><i class="fa-solid fa-bullseye mr-1"></i> Jawaban Konseptual Ideal:</h5>
+                            <p class="text-slate-300 leading-relaxed">${q.idealAnswer}</p>
+                        </div>
+
+                        <!-- KATA KUNCI UTAMA -->
+                        <div>
+                            <h5 class="font-bold text-slate-400 mb-1 text-xs">Kata Kunci Esensial yang Harus Ada:</h5>
+                            <div class="flex flex-wrap gap-1.5">
+                                ${q.keywords.map(kw => `<span class="bg-slate-800 text-brand-300 border border-slate-700 px-2 py-0.5 rounded text-xs">${kw}</span>`).join('')}
+                            </div>
+                        </div>
+
+                        <!-- FITUR PENJELASAN KENAPA BENAR / KENAPA SALAH -->
+                        <div class="pt-3 border-t border-slate-800/80">
+                            <button onclick="showDetailedExplanation(${q.id})" class="text-xs bg-indigo-950/60 hover:bg-indigo-900/60 text-indigo-300 border border-indigo-500/30 px-3 py-1.5 rounded-lg flex items-center space-x-2 transition-colors">
+                                <i class="fa-solid fa-circle-question"></i>
+                                <span>Penjelasan Komprehensif: Kenapa Poin Ini Benar / Kenapa Poin Lain Salah?</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Evaluasi Jawaban Pengguna Secara Otomatis
+        function evaluateUserAnswer(quizId) {
+            const quiz = quizData.find(q => q.id === quizId);
+            const userText = document.getElementById(`user-input-${quizId}`).value.trim().toLowerCase();
+            const evalBox = document.getElementById(`eval-box-${quizId}`);
+
+            if (!userText) {
+                evalBox.className = "p-4 rounded-xl text-xs md:text-sm bg-amber-950/40 border border-amber-500/30 text-amber-200 block";
+                evalBox.innerHTML = "<i class='fa-solid fa-triangle-exclamation mr-1'></i> Harap tuliskan jawaban Anda sebelum melakukan evaluasi mandiri.";
+                return;
+            }
+
+            // Keyword match count
+            let matchedKeywords = [];
+            quiz.keywords.forEach(kw => {
+                if (userText.includes(kw.toLowerCase())) {
+                    matchedKeywords.push(kw);
+                }
+            });
+
+            const scorePercent = Math.round((matchedKeywords.length / quiz.keywords.length) * 100);
+
+            evalBox.classList.remove('hidden');
+            if (scorePercent >= 60) {
+                evalBox.className = "p-4 rounded-xl text-xs md:text-sm bg-emerald-950/40 border border-emerald-500/30 text-emerald-200 block space-y-2";
+                evalBox.innerHTML = `
+                    <div class="flex items-center space-x-2 font-bold text-emerald-400">
+                        <i class="fa-solid fa-circle-check text-lg"></i>
+                        <span>Analisis Jawaban Anda: Baik / Sangat Relevan (Skor Konsep: ~${scorePercent}%)</span>
+                    </div>
+                    <p>Jawaban Anda telah mencakup konsep-konsep kunci esensial: <strong>${matchedKeywords.join(', ') || 'Analisis umum terpenuhi'}</strong>.</p>
+                    <p class="text-xs text-slate-300">Silakan bandingkan kedalaman analisis Anda dengan Jawaban Ideal di bawah ini.</p>
+                `;
+            } else {
+                evalBox.className = "p-4 rounded-xl text-xs md:text-sm bg-rose-950/40 border border-rose-500/30 text-rose-200 block space-y-2";
+                evalBox.innerHTML = `
+                    <div class="flex items-center space-x-2 font-bold text-rose-400">
+                        <i class="fa-solid fa-triangle-exclamation text-lg"></i>
+                        <span>Analisis Jawaban Anda: Masih Kurang Lengkap (Skor Konsep: ~${scorePercent}%)</span>
+                    </div>
+                    <p>Jawaban Anda belum menyentuh kata kunci utama seperti: <strong>${quiz.keywords.filter(k => !matchedKeywords.includes(k)).join(', ')}</strong>.</p>
+                    <p class="text-xs text-slate-300">Klik tombol "Buka Jawaban" di bawah untuk mempelajari letak kekurangannya.</p>
+                `;
+            }
+
+            // Unhide full answer box
+            document.getElementById(`quiz-ans-${quizId}`).classList.remove('hidden');
+            
+            // Increment learning progress
+            addProgress(3);
+        }
+
+        // Show Modal Penjelasan Kenapa Benar / Kenapa Salah
+        function showDetailedExplanation(quizId) {
+            const quiz = quizData.find(q => q.id === quizId);
+            const modal = document.getElementById('explanationModal');
+            const modalBody = document.getElementById('modalBody');
+
+            modalBody.innerHTML = `
+                <div class="space-y-4">
+                    <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
+                        <span class="text-xs text-brand-400 font-bold block mb-1">Soal #${quiz.id} (Pertemuan ${quiz.session}):</span>
+                        <p class="text-xs font-semibold text-white">${quiz.question}</p>
+                    </div>
+
+                    <div class="space-y-2">
+                        <h5 class="text-xs font-bold text-emerald-400 uppercase tracking-wider flex items-center space-x-1">
+                            <i class="fa-solid fa-circle-check"></i>
+                            <span>Mengapa Argumen dalam Jawaban Ideal Ini Benar?</span>
+                        </h5>
+                        <p class="text-xs text-slate-300 leading-relaxed bg-emerald-950/20 border border-emerald-500/20 p-3 rounded-xl">
+                            ${quiz.explanation}
+                        </p>
+                    </div>
+
+                    <div class="space-y-2">
+                        <h5 class="text-xs font-bold text-rose-400 uppercase tracking-wider flex items-center space-x-1">
+                            <i class="fa-solid fa-circle-xmark"></i>
+                            <span>Kesalahan Umum Mahasiswa / Mengapa Pendekatan Lain Salah?</span>
+                        </h5>
+                        <ul class="list-disc list-inside text-xs text-slate-300 space-y-1 bg-rose-950/20 border border-rose-500/20 p-3 rounded-xl">
+                            <li>Hanya menjawab secara permukaan (generik) tanpa mengaitkan dengan teori dasar Pertemuan ${quiz.session}.</li>
+                            <li>Menganggap persoalan disrupsi murni sebagai masalah IT/Teknologi, padahal ini adalah masalah strategi kepemimpinan dan manusia.</li>
+                            <li>Tidak menyertakan kata kunci teoritis esensial seperti: <em>${quiz.keywords.join(', ')}</em>.</li>
+                        </ul>
+                    </div>
+                </div>
+            `;
+
+            modal.classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('explanationModal').classList.add('hidden');
+        }
+
+        // Toggle Hide/Show Answer
+        function toggleAnswer(ansId) {
+            const target = document.getElementById(ansId);
+            if (target) {
+                target.classList.toggle('hidden');
+            }
+        }
+
+        // Jump to Session in Materi Tab
+        function jumpToSession(sessionId) {
+            if (!sessionId) return;
+            switchTab('materi');
+            setTimeout(() => {
+                const el = document.getElementById(sessionId);
+                if (el) {
+                    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 100);
+        }
+
+        // Progress Tracking Logic
+        let progressVal = parseInt(localStorage.getItem('leadDisruptProgress')) || 10;
+
+        function updateProgress() {
+            if (progressVal > 100) progressVal = 100;
+            document.getElementById('progressBar').style.width = `${progressVal}%`;
+            document.getElementById('progressText').innerText = `${progressVal}%`;
+            localStorage.setItem('leadDisruptProgress', progressVal);
+        }
+
+        function addProgress(val) {
+            progressVal += val;
+            updateProgress();
+        }
+
+        // Bookmark Toggle
+        function toggleBookmark(id) {
+            let bookmarks = JSON.parse(localStorage.getItem('leadBookmarks')) || [];
+            if (bookmarks.includes(id)) {
+                bookmarks = bookmarks.filter(b => b !== id);
+                showToast("Materi dihapus dari bookmark.");
+            } else {
+                bookmarks.push(id);
+                showToast("Materi berhasil disimpan ke bookmark!");
+            }
+            localStorage.setItem('leadBookmarks', JSON.stringify(bookmarks));
+        }
+
+        // Custom Toast Notification
+        function showToast(msg) {
+            const toast = document.createElement('div');
+            toast.className = "fixed bottom-5 right-5 bg-brand-600 text-white text-xs font-medium px-4 py-3 rounded-xl shadow-2xl z-50 transition-all flex items-center space-x-2 border border-brand-400/30";
+            toast.innerHTML = `<i class="fa-solid fa-bell"></i><span>${msg}</span>`;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 2500);
+        }
+
+        // Global Search Functionality
+        function handleSearch(query) {
+            const q = query.toLowerCase().trim();
+            if (!q) return;
+
+            // Search in Materi
+            if (currentTab === 'materi') {
+                materiData.forEach(m => {
+                    const card = document.getElementById(m.id);
+                    if (card) {
+                        const text = (m.title + m.summary + m.points.join(' ')).toLowerCase();
+                        if (text.includes(q)) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    }
+                });
+            }
+        }
+
+        // Mobile Sidebar Control
+        const sidebar = document.getElementById('sidebar');
+        document.getElementById('openMobileMenu').addEventListener('click', () => {
+            sidebar.classList.remove('-translate-x-full');
+            sidebar.classList.add('fixed', 'inset-y-0', 'left-0', 'shadow-2xl');
+        });
+
+        function closeMobileSidebar() {
+            if (window.innerWidth < 768) {
+                sidebar.classList.add('-translate-x-full');
+            }
+        }
+
+        document.getElementById('closeMobileMenu').addEventListener('click', closeMobileSidebar);
+
+        // Export/Print Handler
+        function exportProgress() {
+            window.print();
+        }
+
+        // Initialize on Load
+        window.onload = function() {
+            initApp();
+            if (window.innerWidth < 768) {
+                sidebar.classList.add('-translate-x-full');
+            }
+        };
+    </script>
+</body>
+</html>
